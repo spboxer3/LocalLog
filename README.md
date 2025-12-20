@@ -1,6 +1,8 @@
-# LocalLog - Private & Simple Web Tracker
-
 <p align="center"><img src="icons/icon128.png"></p>
+
+<h1 align="center">LocalLog - Private & Simple Web Tracker</h1>
+
+<p align="center">English | <a href="README.zh-TW.md">繁體中文</a></p>
 
 A lightweight, privacy-focused Chrome extension that helps you track your browsing habits, set daily limits, and boost productivity. All data is stored locally on your device and never sent to external servers.
 
