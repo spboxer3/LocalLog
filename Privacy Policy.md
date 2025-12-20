@@ -1,4 +1,4 @@
-# Privacy Policy for LocalLog
+# LocalLog - Private & Simple Web Tracker
 
 
 **Last Updated:** December 20, 2025
@@ -78,12 +78,21 @@ The data persists on your device until you manually clear it. You can delete you
 ## 4. Permissions Usage
 
 
-LocalLog requests the minimum permissions necessary to function:
+In accordance with the Chrome Web Store policies, we declare the specific permissions requested in our manifest (`manifest.json`) and their usage:
 
 
-- **`tabs`**: Required to detect the current active tab's URL and Title to track time accurately. We only read this information when the window is focused.
-- **`storage`**: Required to save your activity history and settings locally on your device.
-- **`notifications`**: Required to send you alerts when you reach a daily time limit or violate Focus Mode rules.
+- **`tabs`**:
+  - **Why:** To detect the URL and Title of the website you are currently visiting.
+  - **Usage:** This is the primary permission required for the time-tracking functionality. It allows the extension to recognize the domain (e.g., "youtube.com") in the background so it can log time to the correct category (e.g., "Video"). We use this strictly for categorization and time calculation.
+- **`storage`**:
+  - **Why:** To save your browsing stats, settings, and rules locally on your device.
+  - **Usage:** This enables your productivity data (such as time spent on sites) and preferences (such as dark mode or blocklists) to persist after you close the browser.
+- **`notifications`**:
+  - **Why:** To communicate important alerts to the user.
+  - **Usage:** We use system notifications solely to alert you when you have exceeded a daily time limit you set, or to provide a gentle warning when you visit a distracting site while "Focus Mode" is active.
+- **`activeTab`**:
+  - **Why:** To grant the extension temporary access to the current tab when you interact with it.
+  - **Usage:** This ensures that when you click the extension icon to view the popup, the extension can immediately identify and display statistics relevant to the page you are currently viewing.
 
 
 ## 5. User Rights and Control
@@ -107,7 +116,4 @@ We may update our Privacy Policy from time to time to reflect changes in our pra
 ## 7. Contact Us
 
 
-If you have any questions about this Privacy Policy or our data practices, please contact us at:
-
-
-**Email:** [Your Email Address Here]
+If you have any questions about this Privacy Policy or our data practices, please contact us.
