@@ -1,4 +1,8 @@
-# ⏱️ LocalLog - 簡單隱私的網頁紀錄器
+<p align="center"><img src="icons/icon128.png"></p>
+
+<h1 align="center">LocalLog - 簡單隱私的網頁紀錄器</h1>
+
+<p align="center"><a href="README.md">English</a> | 繁體中文</p>
 
 
 這是一個輕量級且注重隱私的 Chrome 擴充功能，幫助您追蹤瀏覽習慣、設定每日時間限制並提升工作效率。所有數據皆僅儲存在您的本機裝置上，絕不外傳。
