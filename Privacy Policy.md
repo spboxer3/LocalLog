@@ -36,7 +36,7 @@ To provide time-tracking analytics and productivity reports, LocalLog temporaril
 ### B. User Preferences and Settings
 
 
-We store your configurations, including:
+We locally store your configurations, including:
 
 
 - Daily time limits and rules.
