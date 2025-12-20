@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+
+    <div class="app-container">
+        <header class="header">
+            <div class="header-top">
+                <h1 id="appTitle">Tracker</h1>
+                <!-- Restored Date Picker -->
+                <div class="date-picker-wrapper">
+                    <input type="date" id="dateInput">
+                </div>
+            </div>
+
+            <!-- New Focus Toggle Row -->
+            <div class="focus-card" id="focusCard">
+                <div class="focus-icon"><i class="fa-solid fa-stopwatch"></i></div>
+                <div class="focus-info">
+                    <div class="focus-title i18n" data-msg="labelFocusMode">Focus Mode</div>
+                    <div class="focus-status" id="focusStatus">OFF</div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="checkFocusMode">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+
+            <div class="mode-bar">
+                <div class="mode-toggle">
+                    <button id="btnModeDomain" class="toggle-btn active">
+                        <i class="fa-solid fa-globe"></i> <span id="lblModeDomain">Domain</span>
+                    </button>
+                    <button id="btnModeUrl" class="toggle-btn">
+                        <i class="fa-solid fa-link"></i> <span id="lblModeUrl">URL</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="section chart-section">
+            <div class="chart-wrapper">
+                <svg id="pieChart" viewBox="0 0 100 100"></svg>
+                <div class="chart-center">
+                    <div id="centerLabel" class="label-text">TOTAL</div>
+                    <div id="centerTime" class="value-text">00:00</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section list-section">
+            <div class="section-header">
+                <h2 id="reportTitle">Daily Analysis</h2>
+            </div>
+            <ul id="statsList" class="stats-list"></ul>
+            <div id="noDataMessage" class="no-data hidden">
+                <i class="fa-solid fa-inbox"></i> <span id="msgNoData">No Data</span>
+            </div>
+        </div>
+
+        <div class="footer-actions">
+            <button id="btnDashboard" class="action-btn text-btn btn-dashboard">
+                <i class="fa-solid fa-table-columns"></i> <span class="i18n" data-msg="btnDashboard">Dashboard</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="tooltip" class="tooltip hidden">
+        <div id="tt-primary" class="tt-primary"></div>
+        <div id="tt-secondary" class="tt-secondary"></div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
