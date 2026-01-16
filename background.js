@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Web Activity Time Tracker - High Performance Background Service
  * With Smart Defaults, Buffering, Group Limits & Live Data Serving
  * FIXED: Date generation now uses Local Time instead of UTC.
@@ -66,6 +66,7 @@ let focusNotifiedDomains = {};
 // Init
 loadSettings();
 setupBadge();
+init();
 
 // --- Message Listener ---
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
@@ -188,6 +189,10 @@ function isValidProtocol(url) {
 async function saveData() {
   if (Object.keys(unsavedData).length === 0) return;
 
+  // Atomic swap: Copy and clear buffer immediately
+  const dataToSave = unsavedData;
+  unsavedData = {};
+
   // Use LOCAL Date Key to ensure correctness
   const dateKey = getDateKey();
 
@@ -195,7 +200,7 @@ async function saveData() {
     const data = await chrome.storage.local.get([dateKey]);
     let dailyData = data[dateKey] || {};
 
-    for (const [url, info] of Object.entries(unsavedData)) {
+    for (const [url, info] of Object.entries(dataToSave)) {
       if (!dailyData[url])
         dailyData[url] = { seconds: 0, lastVisit: 0, title: info.title };
       dailyData[url].seconds += info.seconds;
@@ -206,10 +211,17 @@ async function saveData() {
       checkLimits(getHostname(url), dailyData);
     }
     await chrome.storage.local.set({ [dateKey]: dailyData });
-    unsavedData = {};
     lastSaveTime = Date.now();
   } catch (e) {
     console.error("Save failed:", e);
+    // Restore data on failure
+    for (const [url, info] of Object.entries(dataToSave)) {
+      if (!unsavedData[url]) {
+        unsavedData[url] = info;
+      } else {
+        unsavedData[url].seconds += info.seconds;
+      }
+    }
   }
 }
 
@@ -369,3 +381,41 @@ chrome.windows.onFocusChanged.addListener(async (windowId) => {
 chrome.runtime.onSuspend.addListener(() => {
   saveData();
 });
+
+async function init() {
+  try {
+    const tabs = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+    if (tabs && tabs.length > 0) {
+      const tab = tabs[0];
+      if (isValidProtocol(tab.url)) {
+        currentTabId = tab.id;
+        currentUrl = tab.url;
+        currentTitle = tab.title;
+      }
+    }
+  } catch (e) {
+    // Ignore errors during init
+  }
+}
+
+if (typeof module !== 'undefined') {
+    module.exports = {
+        tick,
+        saveData,
+        forceSave,
+        getDateKey,
+        loadSettings,
+        settings,
+        unsavedData,
+        currentUrl,
+        init,
+        setCurrentUrl: (url) => { currentUrl = url; },
+        setCurrentTabId: (id) => { currentTabId = id; },
+        setIsWindowFocused: (val) => { isWindowFocused = val; },
+        getUnsavedData: () => unsavedData,
+        setUnsavedData: (data) => { unsavedData = data; },
+        setSettings: (s) => { settings = s; },
+        checkLimits,
+        // Expose other internals as needed
+    };
+}
